@@ -1,0 +1,26 @@
+{
+  "name": "belgian",
+  "version": "0.0.0",
+  "main": "index.js",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "components"
+  ],
+  "dependencies": {
+    "almond":                "*",
+    "backbone":              "*",
+    "backbone.babysitter":   "*",
+    "backbone.wreqr":        "*",
+    "bootstrap":             "*",
+    "bootstrap-spinedit":    "https://github.com/Svjard/bootstrap-spinedit.git",
+    "font-awesome":          "*",
+    "jquery":                "1.9.x",
+    "marionette":            "*",
+    "requirejs":             "*",
+    "text":                  "*",
+    "tpl":                   "https://github.com/dawsontoth/requirejs-tpl.git",
+    "lodash":                "*",
+    "json2":                 "*"
+  }
+}
