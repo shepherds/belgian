@@ -2,10 +2,10 @@
 define(
   [
     'backbone','marionette','router','controller','vent','text!pj',
-    'views/main/Header', 'views/main/Home'
+    'views/nav/NavBar', 'views/main/Home'
   ],
   function(
-    Backbone, Marionette, Router, Controller, vent, pj, Header, Home
+    Backbone, Marionette, Router, Controller, vent, pj, NavBar, Home
   ) {
     'use strict';
 
@@ -17,7 +17,7 @@ define(
     var app = new Marionette.Application();
 
     app.addRegions({
-      header: '#header',
+      navbar: '#navbar',
       home: '#home'
     });
 
@@ -36,13 +36,13 @@ define(
         //return false;
       });
 
-      app.header.show(new Header());
+      router = new Router({ controller: Controller });
+      app.navbar.show(new NavBar({model: new Backbone.Model({title: pj.title})}));
       app.home.show(new Home());
       router.navigate(window.location.hash || '#', { 'trigger': true });
     });
 
     app.on('initialize:after', function(options) {
-      router = new Router({ controller: Controller });
       Backbone.history.start();
     });
 

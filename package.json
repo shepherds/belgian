@@ -6,8 +6,8 @@
   "main": "index.js",
   "scripts": {
     "prestart": "node node_modules/requirejs/bin/r.js -o baseUrl=public/js mainConfigFile=public/js/main.js name=../vendor/almond/almond include=main out=public/js/main.min.js wrap=true generateSourceMaps=true optimize=uglify2 preserveLicenseComments=false",
-    "start": "node corgi",
-    "test": "node corgi dev"
+    "start": "node index",
+    "test": "node index dev"
   },
   "repository": {
     "type": "git",

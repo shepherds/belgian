@@ -47,7 +47,7 @@ var express = require('express'),
     });
 
     app.get('/api/issues/:id?*', function(req, res) {
-      res.send([];
+      res.send([]);
     });
 
     app.post('/api/dashboards/:id?*', function(req, res) {

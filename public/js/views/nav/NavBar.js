@@ -1,7 +1,7 @@
 /*global define*/
 define(
   ['marionette','vent',
-   'tpl!templates/main/header.tmpl'],
+   'tpl!templates/nav/navbar.tmpl'],
   function (Marionette, vent, tmpl) {
     'use strict';
 
