@@ -46,19 +46,20 @@ var express = require('express'),
       res.render('index', { title: pj.title, dev: process.argv[2] || false } );
     });
 
-    app.get('/api/issues/:id?*', function(req, res) {
+    app.get('/api/issues/:project/:id?*', function(req, res) {
+      // http://pangolin.td.teradata.com/api/v3/issues?private_token=...
       res.send([]);
     });
 
-    app.post('/api/dashboards/:id?*', function(req, res) {
+    app.post('/api/issue/:project/:id?*', function(req, res) {
       console.log(req.params.id);
     });
 
-    app.patch('/api/dashboards/:id?*', function(req, res) {
+    app.patch('/api/issues/:project/:id?*', function(req, res) {
       
     });
 
-    app.delete('/api/dashboards/:id?*', function(req, res) {
+    app.delete('/api/issues/:project/:id?*', function(req, res) {
       
     });
 
