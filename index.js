@@ -46,20 +46,76 @@ var express = require('express'),
       res.render('index', { title: pj.title, dev: process.argv[2] || false } );
     });
 
-    app.get('/api/issues/:project/:id?*', function(req, res) {
-      // http://pangolin.td.teradata.com/api/v3/issues?private_token=...
-      res.send([]);
+    app.post('/login', function(req, res) {
+      var options = {
+        host: req.body['fqdn'],
+        port: 80,
+        path: '/api/v3/users?private_token=' + req.body['private-token'],
+        method: 'GET'
+      };
+
+      var data = '';
+      http.request(options, function(r) {
+        if (r.statusCode === 403) {
+          res.redirect('/?accessDenied=true');
+        }
+        else if (r.statusCode !== 200) {
+          res.redirect('/?error=true');
+        }
+        
+        r.setEncoding('utf8');
+        r.on('data', function (chunk) {
+          data += chunk;
+        });
+        r.on('end', function() {
+          var users = JSON.parse(data);
+          console.log(users);
+          console.log(_.find(users, { 'username': req.body['username'] }));
+          var o = _.extend({}, req.body);
+          o = _.extend(o, _.find(users, { 'username': req.body['username'] }));
+          res.cookie('belgian', o);
+          res.redirect('/#/home');
+        });
+      }).end();
     });
 
-    app.post('/api/issue/:project/:id?*', function(req, res) {
+    app.get('/api/issues/:id?*', function(req, res) {
+      var options = {
+        host: req.cookies.belgian['fqdn'],
+        port: 80,
+        path: '/api/v3/issues/' + ((req.params.id) ? req.params.id : '') + '?private_token=' + req.cookies.belgian['private-token'],
+        method: 'GET'
+      };
+
+      var data = '';
+      http.request(options, function(r) {
+        if (r.statusCode === 403) {
+          res.redirect('/?accessDenied=true');
+        }
+        else if (r.statusCode !== 200) {
+          res.redirect('/?error=true');
+        }
+        
+        r.setEncoding('utf8');
+        r.on('data', function (chunk) {
+          data += chunk;
+        });
+        r.on('end', function() {
+          console.log(JSON.parse(data));
+          res.send(data);
+        });
+      }).end();
+    });
+
+    app.post('/api/issues/:id?*', function(req, res) {
       console.log(req.params.id);
     });
 
-    app.patch('/api/issues/:project/:id?*', function(req, res) {
+    app.patch('/api/issues/:id?*', function(req, res) {
       
     });
 
-    app.delete('/api/issues/:project/:id?*', function(req, res) {
+    app.delete('/api/issues/:id?*', function(req, res) {
       
     });
 

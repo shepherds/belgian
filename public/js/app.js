@@ -1,11 +1,11 @@
 /*global $*/
 define(
   [
-    'backbone','marionette','router','controller','vent','text!pj',
-    'views/nav/NavBar', 'views/main/Home'
+    'backbone','marionette','vent','text!pj',
+    'views/nav/NavBar','views/main/Home','views/main/Login'
   ],
-  function(
-    Backbone, Marionette, Router, Controller, vent, pj, NavBar, Home
+  function (
+    Backbone, Marionette, vent, pj, NavBar, Home, Login
   ) {
     'use strict';
 
@@ -36,9 +36,15 @@ define(
         //return false;
       });
 
-      router = new Router({ controller: Controller });
+      router = new (Backbone.Marionette.AppRouter.extend({
+        "routes": {
+          "home" : function() {
+            app.home.show(new Home());
+          }
+        }
+      }))();
       app.navbar.show(new NavBar({model: new Backbone.Model({title: pj.title})}));
-      app.home.show(new Home());
+      app.home.show(new Login());
       router.navigate(window.location.hash || '#', { 'trigger': true });
     });
 
