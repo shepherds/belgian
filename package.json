@@ -14,13 +14,21 @@
     "url": "git://github.com/shepherds/belgian.git"
   },
   "keywords": [
-    "monitoring",
-    "nagios"
+    "waffle.io",
+    "issues",
+    "GitLab",
+    "gitlab"
   ],
-  "author": "Clay Walker <clayzermk1@gmail.com>",
   "contributors": [ 
     {
-      "name": "Marc Fisher"
+      "name": "Clay Walker",
+      "email": "clayzermk1@gmail.com",
+      "url": "https://github.com/clayzermk1"
+    },
+    {
+      "name": "Marc Fisher",
+      "email": "mcfisher83@gmail.com",
+      "url": "https://github.com/Svjard"
     } 
   ],
   "license": "MIT",
