@@ -7,6 +7,7 @@ var express = require('express'),
         path = require ('path'),
         connect = require('connect'),
         sockjs = require('sockjs'),
+        Datastore = require('nedb')
         pj = require('./package.json');
 
     var app = express();
@@ -33,6 +34,8 @@ var express = require('express'),
     app.configure('development', function() {
       app.use(express.errorHandler());
     });
+
+    var db = new Datastore({ filename: './belgian', autoload: true });
 
     app.options('*', function(req, res) {
         res.header('Access-Control-Allow-Origin', '*');
@@ -69,8 +72,23 @@ var express = require('express'),
         });
         r.on('end', function() {
           var users = JSON.parse(data);
-          console.log(users);
-          console.log(_.find(users, { 'username': req.body['username'] }));
+          
+          db.find({ user: req.body['username'] }, function (err, docs) {
+            if (docs.length === 0) {
+              var doc = {
+                'user' : req.body['username'],
+                'buckets': [
+                  {name: 'Backlog', n: 0, issues: []},
+                  {name: 'Ready', n: 1, issues: []},
+                  {name: 'In Progress', n: 2, issues: []},
+                  {name: 'Done', n: 3, issues: []}
+                ]
+              };
+
+              db.insert(doc);
+            }
+          });
+
           var o = _.extend({}, req.body);
           o = _.extend(o, _.find(users, { 'username': req.body['username'] }));
           res.cookie('belgian', o);
@@ -101,8 +119,24 @@ var express = require('express'),
           data += chunk;
         });
         r.on('end', function() {
-          console.log(JSON.parse(data));
-          res.send(data);
+          data = JSON.parse(data);
+          db.findOne({ user: req.cookies.belgian['username'] }, function (err, doc) {
+            _.each(data, function(n) {
+              var b = _.find(doc.buckets, function(y) { return y.issues.indexOf(n.id) !== -1;});
+              if (b) {
+                n.bucket = b.name;
+              }
+              else if (n.state === 'closed') {
+                n.bucket = 'Done';
+              }
+              else {
+                n.bucket = 'Backlog';
+              }
+            });
+
+            console.log(_.groupBy(data, 'bucket'));
+            res.send(data);
+          });
         });
       }).end();
     });

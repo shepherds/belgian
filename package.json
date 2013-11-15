@@ -37,6 +37,7 @@
     "requirejs": "*",
     "less-middleware": "*",
     "ejs": "*",
-    "sockjs": "*"
+    "sockjs": "*",
+    "nedb" : "*"
   }
 }

@@ -1,49 +1,13 @@
 <div class="row" style="margin: 0;">
 	<div class="col-xs-4" style="padding: 0;border-right: 1px solid black;">
+		<% for (var i = 0; i < obj.buckets.length; i++) {
 		<div class="column-header">
-		    <span class="display-name">Ideas</span>
-		    <span class="badge">12</span>
+		    <span class="display-name"><%= obj.buckets[i].name %></span>
+		    <span class="badge"><%= obj.issues[obj.buckets[i].name].length %></span>
 		</div>
 		<div class="column-body" style="overflow-y: auto;padding-top: 23px;margin-left: 20px;margin-right: 20px;background-color: #e7e7e7;">
-			<div class="issue" style="opacity: 1; display: block;">
-				<div id="21733946" class="card-header">
-					<a id="issueUrl" target="_blank" href="https://github.com/waffleio/waffle.io/issues/325">325</a>
-					
-					<div class="assignee-dropdown-container"></div>
-				</div>
-				<div class="card-body">
-					<div class="title">shortcut "r" does not keep order of columns...</div>
-					<textarea style="display: none;" class="edit-title" name="story-title">		shortcut "r" does not keep order of columns...
-					</textarea>
-
-					<div class="body"></div>
-					<div class="footer">
-						<div class="labels">
-							
-						<span class="label label-danger">Bug</span>
-							
-						</div>
-						<div class="comments">
-							<a class="comments-link" target="_blank" href="https://github.com/waffleio/waffle.io/issues/325#discussion_bucket">
-								<i class="fa fa-comments-o"></i>
-								<span>2</span>
-							</a>
-						</div>
-					</div>
-				</div>
-			</div>
+			
 		</div>
-	</div>
-	<div class="col-xs-4" style="padding: 0;border-right: 1px solid black;">
-		<div class="column-header">
-		    <span class="display-name">Ideas</span>
-		    <span class="badge">12</span>
-		</div>
-	</div>
-	<div class="col-xs-4" style="padding: 0;">
-		<div class="column-header">
-		    <span class="display-name">Ideas</span>
-		    <span class="badge">12</span>
-		</div>
+		<% } %>
 	</div>
 </div>
